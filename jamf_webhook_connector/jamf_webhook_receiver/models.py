@@ -233,17 +233,13 @@ class SnipeITServer(models.Model):
                     "Authorization": f"Bearer: {jss_token}"
                 }
                 try:
-                    print(jss_headers)
-                    print(jss_url)
-                    print(serialnumber)
+                    print(f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}")
                     jss_asset_response = requests.get(
-                        "{}/JSSResource/computers/serialnumber/{}".format(
-                            jss_url, serialnumber
-                        ),
+                        f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}",
                         headers=jss_headers,
                         verify=False,
                     )
-                    print(jss_asset_response)
+                    print(jss_asset_response.json)
 
                     if jss_asset_response.status_code != 200:
                         """IF JSS RETURNS NON 200STATUS"""
