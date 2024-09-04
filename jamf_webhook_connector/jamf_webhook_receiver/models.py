@@ -131,6 +131,7 @@ class SnipeITServer(models.Model):
             return "NON 200 STATUS"
         else:
             """If Device Not In Snipe"""
+            print(snipeit_comp_response.text)
             if snipeit_comp_data["total"] == 0:
                 # return("ASSET NOT IN SNIPE")
                 """ADD LOGIC HERE TO ADD THE DEVICE TO SNIPE"""
