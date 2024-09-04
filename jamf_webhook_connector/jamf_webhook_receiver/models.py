@@ -239,7 +239,7 @@ class SnipeITServer(models.Model):
                         headers=jss_headers,
                         verify=False,
                     )
-                    print(jss_asset_response.json)
+                    print(jss_asset_response.text)
 
                     if jss_asset_response.status_code != 200:
                         """IF JSS RETURNS NON 200STATUS"""
