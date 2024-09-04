@@ -119,6 +119,7 @@ class SnipeITServer(models.Model):
     token = models.CharField(max_length=4000)
 
     def run(self, serialnumber, devicename, jss_url, jss_user, jss_password, jss_token):
+        print(jss_token)
         snipe_url = self.url + "/api/v1/hardware/byserial/{}".format(serialnumber)
         snipe_headers = {
             "Authorization": "Bearer " + self.token,
