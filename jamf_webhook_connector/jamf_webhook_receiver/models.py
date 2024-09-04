@@ -58,10 +58,19 @@ class JSSServer(models.Model):
     def get_absolute_url(self):
         return reverse("jss_detail", kwargs={"pk": self.pk})
 
+    def get_token(url, username, password):
+        """This function gets a bearer token from the Jamf Pro Server"""
+        response = requests.post(url=f'{url}/api/v1/auth/token', auth=(username, password))
+        return response.json()
+
     def jss_webhook_create(
         self, url, name, userName, password, webhook_type, webhook_endpoint
     ):
-        headers = {"Content-Type": "application/xml", "Accept": "application/json"}
+        token= self.get_token(url, userName, password)['token']
+
+        headers = {"Content-Type": "application/xml",
+                   "Accept": "application/json",
+                   "Authorization": f"Bearer {token}"}
         jss_url = str(url) + "/JSSResource/webhooks/id/0"
         this_server_url = "http://{ip}".format(
             ip=os.getenv("FQDN")
@@ -94,7 +103,6 @@ class JSSServer(models.Model):
         )
         jss_post = requests.post(
             jss_url,
-            auth=(userName, password),
             headers=headers,
             verify=False,
             data=post_data,
@@ -110,7 +118,7 @@ class SnipeITServer(models.Model):
     url = models.URLField()
     token = models.CharField(max_length=4000)
 
-    def run(self, serialnumber, devicename, jss_url, jss_user, jss_password):
+    def run(self, serialnumber, devicename, jss_url, jss_user, jss_password, jss_token):
         snipe_url = self.url + "/api/v1/hardware/byserial/{}".format(serialnumber)
         snipe_headers = {
             "Authorization": "Bearer " + self.token,
@@ -130,13 +138,13 @@ class SnipeITServer(models.Model):
                 jss_headers = {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
+                    "Authorization": f"Bearer: {jss_token}"
                 }
                 try:
                     jss_asset_response = requests.get(
                         "{}/JSSResource/computers/serialnumber/{}".format(
                             jss_url, serialnumber
                         ),
-                        auth=(jss_user, jss_password),
                         headers=jss_headers,
                         verify=False,
                     )
@@ -228,7 +236,6 @@ class SnipeITServer(models.Model):
                         "{}/JSSResource/computers/serialnumber/{}".format(
                             jss_url, serialnumber
                         ),
-                        auth=(jss_user, jss_password),
                         headers=jss_headers,
                         verify=False,
                     )

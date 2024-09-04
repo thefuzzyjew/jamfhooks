@@ -197,10 +197,11 @@ def computer_checkin(request):
             jss_url = jss_server.url
             jss_user = jss_server.userName
             jss_password = jss_server.password
+            jss_token = jss_server.get_token()
             for integration in integrations:
                 print(
                     integration.snipe_IT_server.run(
-                        serial_number, device_name, jss_url, jss_user, jss_password
+                        serial_number, device_name, jss_url, jss_user, jss_password, jss_token
                     )
                 )
 

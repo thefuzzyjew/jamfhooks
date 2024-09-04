@@ -5,7 +5,7 @@ docker-compose up -d --force-recreate
 echo "Waiting for Migrations..."
 sleep 10
 # Create a super user
-if [ $TESTING = true ]; then
+if [ $TESTING == true ]; then
   echo "Testing, skip user creation"
 else
   docker exec -it $(docker ps -aqf "name=jamfhooks_web") python manage.py createsuperuser
