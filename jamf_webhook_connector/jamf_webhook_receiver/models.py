@@ -141,7 +141,6 @@ class SnipeITServer(models.Model):
                     "Content-Type": "application/json",
                 }
                 try:
-                    print(2)
                     jss_asset_response = requests.get(
                         f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}",
                         headers=jss_headers,
@@ -232,14 +231,11 @@ class SnipeITServer(models.Model):
                     "Content-Type": "application/json",
                 }
                 try:
-                    print(1)
-                    print(f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}")
                     jss_asset_response = requests.get(
                         f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}",
                         headers=jss_headers,
                         verify=False,
                     )
-                    print(jss_asset_response.text)
 
                     if jss_asset_response.status_code != 200:
                         """IF JSS RETURNS NON 200STATUS"""
