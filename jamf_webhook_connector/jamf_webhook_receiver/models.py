@@ -246,7 +246,7 @@ class SnipeITServer(models.Model):
                             jss_asset_response.status_code
                         )
                         jss_asset_result = response_code
-                        return "response_code"
+                        return jss_asset_response
                     else:
                         jss_asset_result = json.loads(jss_asset_response.text)
                         # print(jss_asset_response.text)
