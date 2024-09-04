@@ -58,7 +58,7 @@ class JSSServer(models.Model):
     def get_absolute_url(self):
         return reverse("jss_detail", kwargs={"pk": self.pk})
 
-    def get_token(url, username, password):
+    def get_token(self, url, username, password):
         """This function gets a bearer token from the Jamf Pro Server"""
         response = requests.post(url=f'{url}/api/v1/auth/token', auth=(username, password))
         return response.json()
