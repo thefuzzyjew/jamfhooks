@@ -230,6 +230,7 @@ class SnipeITServer(models.Model):
                 jss_headers = {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
+                    "Authorization": f"Bearer: {jss_token}"
                 }
                 try:
                     print(jss_headers)
