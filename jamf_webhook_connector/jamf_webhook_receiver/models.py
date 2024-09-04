@@ -136,15 +136,14 @@ class SnipeITServer(models.Model):
                 """ADD LOGIC HERE TO ADD THE DEVICE TO SNIPE"""
                 """Get More Info about the Computer"""
                 jss_headers = {
+                    "Authorization": f"Bearer {jss_token}",
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Authorization": f"Bearer: {jss_token}"
                 }
                 try:
+                    print(2)
                     jss_asset_response = requests.get(
-                        "{}/JSSResource/computers/serialnumber/{}".format(
-                            jss_url, serialnumber
-                        ),
+                        f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}",
                         headers=jss_headers,
                         verify=False,
                     )
@@ -228,11 +227,12 @@ class SnipeITServer(models.Model):
             else:
                 """IF Device is in Snipe"""
                 jss_headers = {
+                    "Authorization": f"Bearer {jss_token}",
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Authorization": f"Bearer: {jss_token}"
                 }
                 try:
+                    print(1)
                     print(f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}")
                     jss_asset_response = requests.get(
                         f"{jss_url}/JSSResource/computers/serialnumber/{serialnumber}",
