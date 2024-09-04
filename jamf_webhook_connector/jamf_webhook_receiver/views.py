@@ -197,7 +197,7 @@ def computer_checkin(request):
             jss_url = jss_server.url
             jss_user = jss_server.userName
             jss_password = jss_server.password
-            jss_token = jss_server.get_token()
+            jss_token = jss_server.get_token(jss_user, jss_password)
             for integration in integrations:
                 print(
                     integration.snipe_IT_server.run(
