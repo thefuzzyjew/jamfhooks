@@ -119,7 +119,6 @@ class SnipeITServer(models.Model):
     token = models.CharField(max_length=4000)
 
     def run(self, serialnumber, devicename, jss_url, jss_user, jss_password, jss_token):
-        print(jss_token)
         snipe_url = self.url + "/api/v1/hardware/byserial/{}".format(serialnumber)
         snipe_headers = {
             "Authorization": "Bearer " + self.token,
@@ -233,6 +232,9 @@ class SnipeITServer(models.Model):
                     "Content-Type": "application/json",
                 }
                 try:
+                    print(jss_headers)
+                    print(jss_url)
+                    print(serialnumber)
                     jss_asset_response = requests.get(
                         "{}/JSSResource/computers/serialnumber/{}".format(
                             jss_url, serialnumber
@@ -240,6 +242,7 @@ class SnipeITServer(models.Model):
                         headers=jss_headers,
                         verify=False,
                     )
+                    print(jss_asset_response)
 
                     if jss_asset_response.status_code != 200:
                         """IF JSS RETURNS NON 200STATUS"""
